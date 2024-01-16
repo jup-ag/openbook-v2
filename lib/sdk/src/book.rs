@@ -2,14 +2,14 @@ use std::collections::HashMap;
 
 use anchor_lang::prelude::Pubkey;
 use anyhow::Result;
-use fixed::types::I80F48;
+pub use fixed::types::I80F48;
 use openbook_v2::state::{
     Market, Orderbook, Side, DROP_EXPIRED_ORDER_LIMIT, FILL_EVENT_REMAINING_LIMIT,
 };
 
 // TODO Adjust this number after doing some calculations
-pub const MAXIMUM_TAKEN_ORDERS: u8 = 8;
-const MAXIMUM_REMAINING_ACCOUNTS: usize = 4;
+pub const MAXIMUM_TAKEN_ORDERS: u8 = 50;
+pub const MAXIMUM_REMAINING_ACCOUNTS: usize = 0;
 
 pub struct Amounts {
     pub total_base_taken_native: u64,

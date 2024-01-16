@@ -29,6 +29,7 @@ jsonrpc-core = "18.0.0"
 jsonrpc-core-client = {version = "18.0.0", features = ["ws", "http", "tls"]}
 log = "0.4"
 openbook-v2 = {path = "../../programs/openbook-v2"}
+openbook-v2-sdk = {path = "../sdk"}
 pyth-sdk-solana = {workspace = true}
 reqwest = "0.11.11"
 serde = "1.0.141"
@@ -38,8 +39,8 @@ solana-account-decoder = {workspace = true}
 solana-client = {workspace = true}
 solana-rpc = {workspace = true}
 solana-sdk = {workspace = true}
-solana-rpc-client = "1.16.1"
-solana-rpc-client-api = "1.16.1"
+solana-rpc-client = "~1.16"
+solana-rpc-client-api = "~1.16"
 spl-associated-token-account = {workspace = true}
 thiserror = "1.0.31"
 tokio = {version = "1", features = ["full"]}

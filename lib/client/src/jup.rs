@@ -11,14 +11,11 @@ use openbook_v2::{
     state::{BookSide, EventHeap, Market, Orderbook, Side},
 };
 
-use crate::{
-    book::{amounts_from_book, Amounts},
-    remaining_accounts_to_crank,
-};
 use jupiter_amm_interface::{
     AccountMap, Amm, KeyedAccount, Quote, QuoteParams, Side as JupiterSide, Swap,
     SwapAndAccountMetas, SwapParams,
 };
+use openbook_v2_sdk::book::{amounts_from_book, remaining_accounts_to_crank, Amounts};
 /// An abstraction in order to share reserve mints and necessary data
 use solana_sdk::{pubkey::Pubkey, sysvar::clock};
 use std::cell::RefCell;
@@ -282,11 +279,11 @@ impl Amm for OpenBookMarket {
 #[cfg(all(test, feature = "enable-gpl"))]
 mod test {
     use super::*;
-    use crate::book::MAXIMUM_TAKEN_ORDERS;
     use anchor_spl::token::spl_token::{
         self,
         state::{Account as TokenAccount, AccountState},
     };
+    use openbook_v2_sdk::book::MAXIMUM_TAKEN_ORDERS;
     use solana_client::nonblocking::rpc_client::RpcClient;
     use solana_program_test::{processor, ProgramTest};
     use solana_sdk::{
