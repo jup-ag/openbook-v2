@@ -9,9 +9,9 @@ version = "0.3.0"
 doctest = false
 
 [dependencies]
-anchor-lang = {workspace = true}
-openbook-v2 = {path = "../../programs/openbook-v2", features = ["client"]}
-solana-sdk = {workspace = true}
-jupiter-amm-interface = "0.1.1"
-fixed = {workspace = true, features = ["serde", "borsh"]}
+anchor-lang = { workspace = true }
+openbook-v2 = { path = "../../programs/openbook-v2", features = ["client"] }
+solana-sdk = { workspace = true }
+jupiter-amm-interface = "~0.3.2"
+fixed = { workspace = true, features = ["serde", "borsh"] }
 anyhow = "1.0"

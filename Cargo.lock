@@ -2696,12 +2696,12 @@ dependencies = [
 
 [[package]]
 name = "jupiter-amm-interface"
-version = "0.1.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a0a07d892e79ae4ad8f0947f30633188269287967ceb0b2c182f894745f49952"
+checksum = "bad613279e534eba2c9d95ef6f2d2c7e170f6647ce50216301741ed3e73a79bb"
 dependencies = [
  "anyhow",
- "borsh 0.9.3",
+ "borsh 0.10.3",
  "rust_decimal",
  "serde",
  "serde_json",
@@ -3095,7 +3095,7 @@ version = "3.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ba8ee05284d79b367ae8966d558e1a305a781fc80c9df51f37775169117ba64f"
 dependencies = [
- "borsh 0.9.3",
+ "borsh 0.10.3",
  "num-derive 0.3.3",
  "num-traits",
  "solana-program",

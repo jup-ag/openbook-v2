@@ -124,7 +124,7 @@ impl Amm for OpenBookMarket {
             Side::Ask
         };
 
-        let input_amount = i64::try_from(quote_params.in_amount)?;
+        let input_amount = i64::try_from(quote_params.amount)?;
 
         // quote params can have exact in (which is implemented here) and exact out which is not implemented
         // check with jupiter to add to their API exact_out support
@@ -181,9 +181,9 @@ impl Amm for OpenBookMarket {
         let SwapParams {
             in_amount,
             source_mint,
-            user_destination_token_account,
-            user_source_token_account,
-            user_transfer_authority,
+            destination_token_account,
+            source_token_account,
+            token_transfer_authority,
             ..
         } = swap_params;
 
@@ -196,14 +196,14 @@ impl Amm for OpenBookMarket {
         };
 
         let (user_quote_account, user_base_account) = if source_is_quote {
-            (*user_source_token_account, *user_destination_token_account)
+            (*source_token_account, *destination_token_account)
         } else {
-            (*user_destination_token_account, *user_source_token_account)
+            (*destination_token_account, *source_token_account)
         };
 
         let accounts = PlaceTakeOrder {
-            signer: *user_transfer_authority,
-            penalty_payer: *user_transfer_authority,
+            signer: *token_transfer_authority,
+            penalty_payer: *token_transfer_authority,
             market: self.key,
             market_authority: self.market.market_authority,
             bids: self.market.bids,
