@@ -13,39 +13,39 @@ default = ["openbook-v2/client"]
 enable-gpl = ["openbook-v2/enable-gpl"]
 
 [dependencies]
-anchor-client = {workspace = true}
-anchor-lang = {workspace = true}
-anchor-spl = {workspace = true}
+anchor-client = { workspace = true }
+anchor-lang = { workspace = true }
+anchor-spl = { workspace = true }
 anyhow = "1.0"
 async-channel = "1.6"
-async-once-cell = {version = "0.4.2", features = ["unpin"]}
+async-once-cell = { version = "0.4.2", features = ["unpin"] }
 async-trait = "0.1.52"
 base64 = "0.13.0"
 bincode = "1.3.3"
-fixed = {workspace = true, features = ["serde", "borsh"]}
+fixed = { workspace = true, features = ["serde", "borsh"] }
 futures = "0.3.25"
 itertools = "0.10.3"
 jsonrpc-core = "18.0.0"
-jsonrpc-core-client = {version = "18.0.0", features = ["ws", "http", "tls"]}
+jsonrpc-core-client = { version = "18.0.0", features = ["ws", "http", "tls"] }
 log = "0.4"
-openbook-v2 = {path = "../../programs/openbook-v2"}
-openbook-v2-sdk = {path = "../sdk"}
-pyth-sdk-solana = {workspace = true}
+openbook-v2 = { path = "../../programs/openbook-v2" }
+openbook-v2-sdk = { path = "../sdk" }
+pyth-sdk-solana = { workspace = true }
 reqwest = "0.11.11"
 serde = "1.0.141"
 serde_json = "1.0.82"
 shellexpand = "2.1.0"
-solana-account-decoder = {workspace = true}
-solana-client = {workspace = true}
-solana-rpc = {workspace = true}
-solana-sdk = {workspace = true}
+solana-account-decoder = { workspace = true }
+solana-client = { workspace = true }
+solana-rpc = { workspace = true }
+solana-sdk = { workspace = true }
 solana-rpc-client = "~1.16"
 solana-rpc-client-api = "~1.16"
-spl-associated-token-account = {workspace = true}
+spl-associated-token-account = { workspace = true }
 thiserror = "1.0.31"
-tokio = {version = "1", features = ["full"]}
-tokio-stream = {version = "0.1.9"}
-jupiter-amm-interface = "0.1.1"
+tokio = { version = "1", features = ["full"] }
+tokio-stream = { version = "0.1.9" }
+jupiter-amm-interface = "~0.3.2"
 
 [dev-dependencies]
 solana-program-test = { workspace = true }
