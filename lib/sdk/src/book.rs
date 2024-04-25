@@ -9,7 +9,7 @@ use openbook_v2::state::{
 
 // TODO Adjust this number after doing some calculations
 pub const MAXIMUM_TAKEN_ORDERS: u8 = 50;
-pub const MAXIMUM_REMAINING_ACCOUNTS: usize = 0;
+pub const MAXIMUM_REMAINING_ACCOUNTS: usize = 3;
 
 pub struct Amounts {
     pub total_base_taken_native: u64,
