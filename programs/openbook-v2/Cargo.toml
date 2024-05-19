@@ -40,7 +40,7 @@ solana-program = { workspace = true }
 solana-sdk = { workspace = true, optional = true }
 static_assertions = "1.1"
 switchboard-program = ">=0.2.0"
-switchboard-v2 = "0.4.0"
+switchboard-solana = "0.29.99"
 
 [dev-dependencies]
 async-trait = "0.1.52"
