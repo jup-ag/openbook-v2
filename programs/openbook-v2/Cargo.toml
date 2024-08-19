@@ -27,10 +27,14 @@ anchor-lang = { workspace = true, features = ["event-cpi"] }
 anchor-spl = { workspace = true }
 arbitrary = { version = "~1.0", features = ["derive"], optional = true }
 arrayref = "0.3.6"
-bytemuck = { version = "^1.7.2", features = ["derive", "min_const_generics"] }
+bytemuck = { version = "^1.17", features = ["derive", "min_const_generics"] }
 default-env = "0.1.1"
 derivative = "2.2.0"
-fixed = { workspace = true, features = ["serde", "borsh", "debug-assert-in-release"] }
+fixed = { workspace = true, features = [
+    "serde",
+    "borsh",
+    "debug-assert-in-release",
+] }
 itertools = "0.10.3"
 num_enum = "0.5.1"
 pyth-sdk-solana = { workspace = true }
@@ -53,4 +57,6 @@ rand = "0.8.4"
 solana-program-test = { workspace = true }
 solana-logger = { workspace = true }
 spl-token = { version = "^3.5.0", features = ["no-entrypoint"] }
-spl-associated-token-account = { workspace = true, features = ["no-entrypoint"] }
+spl-associated-token-account = { workspace = true, features = [
+    "no-entrypoint",
+] }
