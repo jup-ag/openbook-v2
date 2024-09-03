@@ -5,7 +5,7 @@ use raydium_amm_v3::states::PoolState;
 use static_assertions::const_assert_eq;
 use std::mem::size_of;
 use switchboard_program::FastRoundResultAccountData;
-use switchboard_v2::AggregatorAccountData;
+use switchboard_solana::AggregatorAccountData;
 
 use crate::accounts_zerocopy::*;
 use crate::error::*;

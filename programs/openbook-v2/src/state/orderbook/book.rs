@@ -558,7 +558,7 @@ pub fn process_out_event(
     event_heap: &mut EventHeap,
     open_orders_account: Option<&mut OpenOrdersAccount>,
     owner: &Pubkey,
-    remaining_accs: &[AccountInfo],
+    remaining_accs: &[AccountInfo<'_>],
 ) -> Result<()> {
     if let Some(acc) = open_orders_account {
         if owner == &event.owner {
@@ -568,7 +568,7 @@ pub fn process_out_event(
     }
 
     if let Some(acc) = remaining_accs.iter().find(|ai| ai.key == &event.owner) {
-        let ooa: AccountLoader<OpenOrdersAccount> = AccountLoader::try_from(acc)?;
+        let ooa = try_from!(AccountLoader::<OpenOrdersAccount>, acc)?;
         let mut acc = ooa.load_mut()?;
         acc.cancel_order(event.owner_slot as usize, event.quantity, *market);
     } else {
@@ -588,7 +588,7 @@ pub fn process_fill_event(
     let mut is_processed = false;
     if *number_of_processed_fill_events < FILL_EVENT_REMAINING_LIMIT {
         if let Some(acc) = remaining_accs.iter().find(|ai| ai.key == &event.maker) {
-            let ooa: AccountLoader<OpenOrdersAccount> = AccountLoader::try_from(acc)?;
+            let ooa = try_from!(AccountLoader::<OpenOrdersAccount>, acc)?;
             let mut maker = ooa.load_mut()?;
             maker.execute_maker(market, &event);
             is_processed = true;

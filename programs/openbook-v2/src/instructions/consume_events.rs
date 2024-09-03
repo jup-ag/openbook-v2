@@ -27,7 +27,7 @@ macro_rules! load_open_orders_account {
             }
 
             Some(ai) => {
-                let ooa: AccountLoader<OpenOrdersAccount> = AccountLoader::try_from(ai)?;
+                let ooa = try_from!(AccountLoader::<OpenOrdersAccount>, ai)?;
                 ooa
             }
         };
@@ -44,7 +44,7 @@ pub fn consume_events(
 
     let mut market = ctx.accounts.market.load_mut()?;
     let mut event_heap = ctx.accounts.event_heap.load_mut()?;
-    let remaining_accs = &ctx.remaining_accounts;
+    let remaining_accs = ctx.remaining_accounts;
 
     let slots_to_consume = slots
         .unwrap_or_default()

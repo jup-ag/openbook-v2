@@ -6,18 +6,20 @@ members = [
 ]
 
 [workspace.dependencies]
-anchor-client = "0.28.0"
-anchor-lang = "0.28.0"
-anchor-spl = "0.28.0"
+anchor-client = "0.29.0"
+anchor-lang = "0.29.0"
+anchor-spl = "0.29.0"
 fixed = { git = "https://github.com/blockworks-foundation/fixed.git", branch = "v1.11.0-borsh0_10-mango" }
-pyth-sdk-solana = "0.8.0"
-solana-account-decoder = "~1.16"
-solana-client = "~1.16"
-solana-logger = "~1.16"
-solana-program = "~1.16"
-solana-program-test = "~1.16"
-solana-rpc = "~1.16"
-solana-sdk = "~1.16"
+pyth-sdk-solana = "0.10.2"
+solana-account-decoder = "~1.18"
+solana-client = "~1.18"
+solana-logger = "~1.18"
+solana-program = "~1.18"
+solana-program-test = "~1.18"
+solana-rpc = "~1.18"
+solana-sdk = "~1.18"
+solana-rpc-client = "~1.18"
+solana-rpc-client-api = "~1.18"
 spl-associated-token-account = "1.0.3"
 
 [profile.release]

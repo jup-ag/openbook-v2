@@ -17,6 +17,6 @@ pub fn settle_funds_expired<'info>(
         ctx.program_id,
         &mut ctx.accounts.to_settle_funds_accounts(),
         ctx.remaining_accounts,
-        ctx.bumps,
+        SettleFundsBumps {},
     ))
 }

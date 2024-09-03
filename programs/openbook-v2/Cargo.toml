@@ -26,7 +26,9 @@ enable-gpl = []
 anchor-lang = { workspace = true, features = ["event-cpi"] }
 anchor-spl = { workspace = true }
 arbitrary = { version = "~1.0", features = ["derive"], optional = true }
-raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/jupiter-core-third-party-sdks.git", features = ["cpi"] }
+raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "60be3b4e8e7581950e0709ae14f13e35078493d5", features = [
+    "no-entrypoint",
+] }
 arrayref = "0.3.6"
 bytemuck = { version = "^1.7.2", features = ["derive", "min_const_generics"] }
 default-env = "0.1.1"
@@ -40,7 +42,7 @@ solana-program = { workspace = true }
 solana-sdk = { workspace = true, optional = true }
 static_assertions = "1.1"
 switchboard-program = ">=0.2.0"
-switchboard-v2 = "0.4.0"
+switchboard-solana = "0.29.110"
 
 [dev-dependencies]
 async-trait = "0.1.52"

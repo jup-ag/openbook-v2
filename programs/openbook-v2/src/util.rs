@@ -9,6 +9,14 @@ pub fn fill_from_str<const N: usize>(name: &str) -> Result<[u8; N]> {
     Ok(name_)
 }
 
+// workaround for lifetime madness https://github.com/coral-xyz/anchor/pull/2770
+#[macro_export]
+macro_rules! try_from {
+    ($ty: ty, $acc: expr) => {
+        <$ty>::try_from(unsafe { core::mem::transmute::<_, &AccountInfo<'_>>($acc.as_ref()) })
+    };
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
