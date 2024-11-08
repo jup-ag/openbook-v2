@@ -12,6 +12,6 @@ doctest = false
 anchor-lang = { workspace = true }
 openbook-v2 = { path = "../../programs/openbook-v2", features = ["client"] }
 solana-sdk = { workspace = true }
-jupiter-amm-interface = "~0.3.2"
+jupiter-amm-interface = "0.4.6"
 fixed = { workspace = true, features = ["serde", "borsh"] }
 anyhow = "1.0"

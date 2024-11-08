@@ -26,14 +26,18 @@ enable-gpl = []
 anchor-lang = { workspace = true, features = ["event-cpi"] }
 anchor-spl = { workspace = true }
 arbitrary = { version = "~1.0", features = ["derive"], optional = true }
-raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "60be3b4e8e7581950e0709ae14f13e35078493d5", features = [
+raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "d0d14638bdf0a5f4ffc90dff37ac1699371fc121", features = [
     "no-entrypoint",
 ] }
 arrayref = "0.3.6"
 bytemuck = { version = "^1.7.2", features = ["derive", "min_const_generics"] }
 default-env = "0.1.1"
 derivative = "2.2.0"
-fixed = { workspace = true, features = ["serde", "borsh", "debug-assert-in-release"] }
+fixed = { workspace = true, features = [
+    "serde",
+    "borsh",
+    "debug-assert-in-release",
+] }
 itertools = "0.10.3"
 num_enum = "0.5.1"
 pyth-sdk-solana = { workspace = true }
@@ -42,7 +46,7 @@ solana-program = { workspace = true }
 solana-sdk = { workspace = true, optional = true }
 static_assertions = "1.1"
 switchboard-program = ">=0.2.0"
-switchboard-solana = "0.29.110"
+switchboard-solana = "0.30.4"
 
 [dev-dependencies]
 async-trait = "0.1.52"
@@ -55,5 +59,7 @@ num = "0.4.0"
 rand = "0.8.4"
 solana-program-test = { workspace = true }
 solana-logger = { workspace = true }
-spl-token = { version = "^3.5.0", features = ["no-entrypoint"] }
-spl-associated-token-account = { workspace = true, features = ["no-entrypoint"] }
+spl-token = { version = "6", features = ["no-entrypoint"] }
+spl-associated-token-account = { workspace = true, features = [
+    "no-entrypoint",
+] }

@@ -35,8 +35,8 @@ impl OrderTreeType {
     }
 }
 
-#[zero_copy]
-#[derive(bytemuck::Pod, bytemuck::Zeroable)]
+#[derive(bytemuck::Pod, bytemuck::Zeroable, Copy, Clone)]
+#[repr(C)]
 pub struct OrderTreeRoot {
     pub maybe_node: NodeHandle,
     pub leaf_count: u32,
@@ -57,8 +57,8 @@ impl OrderTreeRoot {
 /// A binary tree on AnyNode::key()
 ///
 /// The key encodes the price in the top 64 bits.
-#[zero_copy]
-#[derive(bytemuck::Pod, bytemuck::Zeroable)]
+#[derive(bytemuck::Pod, bytemuck::Zeroable, Copy, Clone)]
+#[repr(C)]
 pub struct OrderTreeNodes {
     pub order_tree_type: u8, // OrderTreeType, but that's not POD
     pub padding: [u8; 3],

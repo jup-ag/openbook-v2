@@ -225,7 +225,7 @@ impl<A: AccountReader> LoadZeroCopy for A {
             return Err(ErrorCode::AccountDiscriminatorNotFound.into());
         }
         let disc_bytes = array_ref![data, 0, 8];
-        if disc_bytes != &T::discriminator() {
+        if disc_bytes != &T::DISCRIMINATOR {
             return Err(ErrorCode::AccountDiscriminatorMismatch.into());
         }
 
@@ -249,7 +249,7 @@ impl<'info, 'a> LoadMutZeroCopy for AccountInfoRefMut<'info, 'a> {
             return Err(ErrorCode::AccountDiscriminatorNotFound.into());
         }
         let disc_bytes = array_ref![self.data, 0, 8];
-        if disc_bytes != &T::discriminator() {
+        if disc_bytes != &T::DISCRIMINATOR {
             return Err(ErrorCode::AccountDiscriminatorMismatch.into());
         }
 
@@ -277,7 +277,7 @@ impl<'info> LoadZeroCopyRef for AccountInfo<'info> {
         }
 
         let disc_bytes = array_ref![data, 0, 8];
-        if disc_bytes != &T::discriminator() {
+        if disc_bytes != &T::DISCRIMINATOR {
             return Err(ErrorCode::AccountDiscriminatorMismatch.into());
         }
 
@@ -306,7 +306,7 @@ impl<'info> LoadMutZeroCopyRef for AccountInfo<'info> {
         }
 
         let disc_bytes = array_ref![data, 0, 8];
-        if disc_bytes != &T::discriminator() {
+        if disc_bytes != &T::DISCRIMINATOR {
             return Err(ErrorCode::AccountDiscriminatorMismatch.into());
         }
 

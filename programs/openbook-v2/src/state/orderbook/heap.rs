@@ -14,7 +14,8 @@ pub const NO_NODE: u16 = u16::MAX;
 /// Events are stored in a fixed-array of nodes. Free nodes are connected by a single-linked list
 /// starting at free_head while used nodes form a circular doubly-linked list starting at
 /// used_head.
-#[account(zero_copy)]
+#[account(zero_copy(unsafe))]
+#[repr(C)]
 pub struct EventHeap {
     pub header: EventHeapHeader,
     pub nodes: [EventNode; MAX_NUM_EVENTS as usize],
@@ -198,8 +199,9 @@ impl EventHeapHeader {
     }
 }
 
-#[zero_copy]
-#[derive(Debug)]
+#[zero_copy(unsafe)]
+#[derive(Debug, bytemuck::Pod, bytemuck::Zeroable)]
+#[repr(C)]
 pub struct EventNode {
     next: u16,
     prev: u16,
@@ -216,8 +218,10 @@ impl EventNode {
 }
 
 const EVENT_SIZE: usize = 144;
-#[zero_copy]
+
+#[zero_copy(unsafe)]
 #[derive(Debug, bytemuck::Pod, bytemuck::Zeroable)]
+#[repr(C)]
 pub struct AnyEvent {
     pub event_type: u8,
     pub padding: [u8; 143],

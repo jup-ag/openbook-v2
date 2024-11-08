@@ -1,5 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_lang::Discriminator;
+use bytemuck::Pod;
+use bytemuck::Zeroable;
 use fixed::types::U64F64;
 use raydium_amm_v3::states::PoolState;
 use static_assertions::const_assert_eq;
@@ -29,8 +31,8 @@ pub mod switchboard_v2_mainnet_oracle {
     declare_id!("DtmE9D2CSB4L5D6A15mraeEjrGMm6auWVzgaD8hK2tZM");
 }
 
-#[zero_copy]
-#[derive(AnchorDeserialize, AnchorSerialize, Debug)]
+#[zero_copy(unsafe)]
+#[derive(AnchorDeserialize, Debug)]
 pub struct OracleConfig {
     pub conf_filter: f64,
     pub max_staleness_slots: i64,
@@ -98,12 +100,13 @@ impl OracleState {
 
     pub fn has_valid_confidence(&self, oracle_pk: &Pubkey, config: &OracleConfig) -> bool {
         if self.deviation > config.conf_filter * self.price {
+            let conf_filter = config.conf_filter;
             msg!(
                 "Oracle confidence not good enough: pubkey {}, price: {}, deviation: {}, conf_filter: {}",
                 oracle_pk,
                 self.price,
                 self.deviation,
-                config.conf_filter,
+                conf_filter,
             );
             false
         } else {
@@ -153,7 +156,7 @@ pub fn determine_oracle_type(acc_info: &impl KeyedAccountReader) -> Result<Oracl
 
     if u32::from_le_bytes(data[0..4].try_into().unwrap()) == pyth_sdk_solana::state::MAGIC {
         return Ok(OracleType::Pyth);
-    } else if data[0..8] == StubOracle::discriminator() {
+    } else if data[0..8] == *StubOracle::DISCRIMINATOR {
         return Ok(OracleType::Stub);
     }
     // https://github.com/switchboard-xyz/switchboard-v2/blob/main/libraries/rs/src/aggregator.rs#L114
