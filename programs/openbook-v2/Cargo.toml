@@ -45,7 +45,6 @@ solana-security-txt = "1.1.1"
 solana-program = { workspace = true }
 solana-sdk = { workspace = true, optional = true }
 static_assertions = "1.1"
-switchboard-program = ">=0.2.0"
 switchboard-solana = "0.30.4"
 
 [dev-dependencies]

@@ -6,7 +6,6 @@ use fixed::types::U64F64;
 use raydium_amm_v3::states::PoolState;
 use static_assertions::const_assert_eq;
 use std::mem::size_of;
-use switchboard_program::FastRoundResultAccountData;
 use switchboard_solana::AggregatorAccountData;
 
 use crate::accounts_zerocopy::*;
@@ -65,7 +64,6 @@ impl OracleConfigParams {
 pub enum OracleType {
     Pyth,
     Stub,
-    SwitchboardV1,
     SwitchboardV2,
     RaydiumCLMM,
 }
@@ -165,11 +163,7 @@ pub fn determine_oracle_type(acc_info: &impl KeyedAccountReader) -> Result<Oracl
         return Ok(OracleType::SwitchboardV2);
     }
     // note: this is the only known way of checking this
-    else if acc_info.owner() == &switchboard_v1_devnet_oracle::ID
-        || acc_info.owner() == &switchboard_v2_mainnet_oracle::ID
-    {
-        return Ok(OracleType::SwitchboardV1);
-    } else if acc_info.owner() == &raydium_amm_v3::ID {
+    else if acc_info.owner() == &raydium_amm_v3::ID {
         return Ok(OracleType::RaydiumCLMM);
     }
 
@@ -274,20 +268,7 @@ pub fn oracle_state_unchecked(acc_info: &impl KeyedAccountReader) -> Result<Orac
                 oracle_type: OracleType::SwitchboardV2,
             }
         }
-        OracleType::SwitchboardV1 => {
-            let result = FastRoundResultAccountData::deserialize(data).unwrap();
-            let price = result.result.result;
 
-            let deviation = result.result.max_response - result.result.min_response;
-            let last_update_slot = result.result.round_open_slot;
-            require_gte!(price, 0f64);
-            OracleState {
-                price,
-                last_update_slot,
-                deviation,
-                oracle_type: OracleType::SwitchboardV1,
-            }
-        }
         OracleType::RaydiumCLMM => {
             let pool = bytemuck::from_bytes::<PoolState>(&data[8..]);
 
@@ -325,11 +306,6 @@ mod tests {
                 "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix",
                 OracleType::Pyth,
                 Pubkey::default(),
-            ),
-            (
-                "8k7F9Xb36oFJsjpCKpsXvg4cgBRoZtwNTc3EzG5Ttd2o",
-                OracleType::SwitchboardV1,
-                switchboard_v1_devnet_oracle::ID,
             ),
             (
                 "GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR",
