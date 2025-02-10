@@ -26,7 +26,7 @@ enable-gpl = []
 anchor-lang = { workspace = true, features = ["event-cpi"] }
 anchor-spl = { workspace = true }
 arbitrary = { version = "~1.0", features = ["derive"], optional = true }
-raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "d0d14638bdf0a5f4ffc90dff37ac1699371fc121", features = [
+raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "4781c48ca78aa447144301c7cb260a8731bb70df", features = [
     "no-entrypoint",
 ] }
 arrayref = "0.3.6"
@@ -50,7 +50,7 @@ switchboard-solana = "0.30.4"
 [dev-dependencies]
 async-trait = "0.1.52"
 base64 = "0.13.0"
-log = "0.4.14"
+log = "0.4"
 env_logger = "0.9.0"
 itertools = "0.10.3"
 lazy_static = "1.4.0"
