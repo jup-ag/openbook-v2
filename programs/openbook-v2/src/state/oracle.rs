@@ -83,13 +83,6 @@ impl OracleState {
                 .saturating_add(config.max_staleness_slots as u64)
                 < now_slot
         {
-            msg!(
-                "Oracle is stale; pubkey {}, price: {}, last_update_slot: {}, now_slot: {}",
-                oracle_pk,
-                self.price,
-                self.last_update_slot,
-                now_slot,
-            );
             true
         } else {
             false
