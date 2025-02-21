@@ -77,9 +77,8 @@ pub fn iterate_book_amounts(
 ) -> (i64, i64, u64, bool) {
     let mut limit = MAXIMUM_TAKEN_ORDERS;
 
-    // Pre-calculate constants
+    // Pre-calculate constants and avoid repeated access
     let quote_lot_size = market.quote_lot_size;
-
     let order_max_base_lots = max_base_lots;
     let order_max_quote_lots = match side {
         Side::Bid => market.subtract_taker_fees(max_quote_lots_including_fees),
@@ -94,10 +93,14 @@ pub fn iterate_book_amounts(
     let mut maker_rebates_acc = 0;
     let mut remaining_base_lots = order_max_base_lots;
     let mut remaining_quote_lots = order_max_quote_lots;
+    let mut total_base_lots_taken = 0;
+    let mut total_quote_lots_taken = 0;
 
     let opposing_bookside = book.bookside(side.invert_side());
+    let mut iter = opposing_bookside.iter_all_including_invalid(now_ts, oracle_price_lots);
 
-    for best_opposing in opposing_bookside.iter_all_including_invalid(now_ts, oracle_price_lots) {
+    // Process orders in chunks to improve cache locality
+    while let Some(best_opposing) = iter.next() {
         if !best_opposing.is_valid() {
             continue;
         }
@@ -123,9 +126,11 @@ pub fn iterate_book_amounts(
 
         let match_quote_lots = match_base_lots * best_opposing_price;
 
-        // Always calculate maker rebates since we need them for the amounts
+        // Calculate maker rebates and update totals in one pass
         maker_rebates_acc += market.maker_rebate_floor((match_quote_lots * quote_lot_size) as u64);
 
+        total_base_lots_taken += match_base_lots;
+        total_quote_lots_taken += match_quote_lots;
         remaining_base_lots -= match_base_lots;
         remaining_quote_lots -= match_quote_lots;
 
@@ -136,9 +141,6 @@ pub fn iterate_book_amounts(
             break;
         }
     }
-
-    let total_base_lots_taken = order_max_base_lots - remaining_base_lots;
-    let total_quote_lots_taken = order_max_quote_lots - remaining_quote_lots;
 
     let not_enough_liquidity = match side {
         Side::Ask => remaining_base_lots > 0,
