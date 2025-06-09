@@ -4,7 +4,7 @@ use anchor_lang::prelude::Pubkey;
 use anyhow::Result;
 pub use fixed::types::I80F48;
 use openbook_v2::state::{
-    Market, Orderbook, Side, DROP_EXPIRED_ORDER_LIMIT, FILL_EVENT_REMAINING_LIMIT,
+    BookSide, Market, Side, DROP_EXPIRED_ORDER_LIMIT, FILL_EVENT_REMAINING_LIMIT,
 };
 
 // TODO Adjust this number after doing some calculations
@@ -18,8 +18,23 @@ pub struct Amounts {
     pub not_enough_liquidity: bool,
 }
 
+#[derive(Clone)]
+pub struct Orderbook {
+    pub bids: BookSide,
+    pub asks: BookSide,
+}
+
+impl Orderbook {
+    pub fn bookside(&self, side: Side) -> &BookSide {
+        match side {
+            Side::Bid => &self.bids,
+            Side::Ask => &self.asks,
+        }
+    }
+}
+
 pub fn remaining_accounts_to_crank(
-    book: Orderbook,
+    book: &Orderbook,
     side: Side,
     max_base_lots: i64,
     max_quote_lots_including_fees: i64,
@@ -64,7 +79,7 @@ pub fn remaining_accounts_to_crank(
 }
 
 pub fn amounts_from_book(
-    book: Orderbook,
+    book: &Orderbook,
     side: Side,
     max_base_lots: i64,
     max_quote_lots_including_fees: i64,
@@ -103,7 +118,7 @@ pub fn amounts_from_book(
 
 #[allow(clippy::too_many_arguments)]
 pub fn iterate_book(
-    book: Orderbook,
+    book: &Orderbook,
     side: Side,
     max_base_lots: i64,
     max_quote_lots_including_fees: i64,
