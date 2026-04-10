@@ -4,20 +4,25 @@ members = ["lib/sdk", "programs/*"]
 resolver = "2"
 
 [workspace.dependencies]
-anchor-lang = "0.31.1"
-anchor-spl = "0.31.1"
+anchor-lang = "1.0.0"
+anchor-spl = "1.0.0"
 fixed = { git = "https://github.com/blockworks-foundation/fixed.git", branch = "v1.11.0-borsh0_10-mango" }
-pyth-sdk-solana = "0.10"
-solana-account-decoder = ">=2.2"
-solana-client = ">=2.2"
-solana-logger = ">=2.2"
-solana-program = ">=2.2"
-solana-program-test = ">=2.2"
-solana-rpc = ">=2.2"
-solana-sdk = ">=2.2"
-solana-rpc-client = ">=2.2"
-solana-rpc-client-api = ">=2.2"
-spl-associated-token-account = "7.0.0"
+pyth-sdk-solana = { git = "https://github.com/jup-ag/pyth-sdk-rs.git", rev = "3f7160bec935bf1698b20b1a3ecfa86b9eec6e1b" }
+solana-account = "3.4.0"
+solana-account-decoder = "3.1.12"
+solana-commitment-config = "3.1.1"
+solana-keypair = "3.1.2"
+solana-logger = "3.0.0"
+solana-program = "3.0.0"
+solana-program-test = "3.1.12"
+solana-rpc = "3.1.12"
+solana-rpc-client = "3.1.12"
+solana-rpc-client-api = "3.1.12"
+solana-signer = "3.0.0"
+solana-transaction = "3.1.0"
+solana-transaction-error = "3.2.0"
+spl-associated-token-account-interface = "2.0.0"
+spl-token-interface = "2.0.0"
 
 [profile.release]
 codegen-units = 1
@@ -30,4 +35,4 @@ opt-level = 3
 
 
 [patch.crates-io]
-switchboard-solana = { git = "https://github.com/jup-ag/switchboard-solana-sdk.git", rev = "292962367f5320b2b31fce96a39050f6505b2504" }
+switchboard-solana = { git = "https://github.com/jup-ag/switchboard-solana-sdk.git", rev = "ea00f89b87158bceb7874fe0f67bd2ad9769d4dd" }

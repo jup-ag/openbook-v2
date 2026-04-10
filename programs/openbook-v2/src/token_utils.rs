@@ -4,9 +4,9 @@ use anchor_spl::token;
 
 pub fn token_transfer<
     'info,
-    P: ToAccountInfo<'info>,
+    P: ToAccountInfo<'info> + Key,
     A: ToAccountInfo<'info>,
-    S: ToAccountInfo<'info>,
+    S: ToAccountInfo<'info> + Key,
 >(
     amount: u64,
     token_program: &P,
@@ -17,7 +17,7 @@ pub fn token_transfer<
     if amount > 0 {
         token::transfer(
             CpiContext::new(
-                token_program.to_account_info(),
+                token_program.key(),
                 token::Transfer {
                     from: from.to_account_info(),
                     to: to.to_account_info(),
@@ -33,9 +33,9 @@ pub fn token_transfer<
 
 pub fn token_transfer_signed<
     'info,
-    P: ToAccountInfo<'info>,
+    P: ToAccountInfo<'info> + Key,
     A: ToAccountInfo<'info>,
-    L: ToAccountInfo<'info>,
+    L: ToAccountInfo<'info> + Key,
 >(
     amount: u64,
     token_program: &P,
@@ -47,7 +47,7 @@ pub fn token_transfer_signed<
     if amount > 0 {
         token::transfer(
             CpiContext::new_with_signer(
-                token_program.to_account_info(),
+                token_program.key(),
                 token::Transfer {
                     from: from.to_account_info(),
                     to: to.to_account_info(),
@@ -64,9 +64,9 @@ pub fn token_transfer_signed<
 
 pub fn system_program_transfer<
     'info,
-    S: ToAccountInfo<'info>,
+    S: ToAccountInfo<'info> + Key,
     A: ToAccountInfo<'info>,
-    L: ToAccountInfo<'info>,
+    L: ToAccountInfo<'info> + Key,
 >(
     amount: u64,
     system_program: &S,
@@ -76,7 +76,7 @@ pub fn system_program_transfer<
     if amount > 0 {
         system_program::transfer(
             CpiContext::new(
-                system_program.to_account_info(),
+                system_program.key(),
                 system_program::Transfer {
                     from: from.to_account_info(),
                     to: to.to_account_info(),

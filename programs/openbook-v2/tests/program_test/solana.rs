@@ -7,16 +7,16 @@ use std::sync::{Arc, RwLock};
 use super::utils::TestKeypair;
 use anchor_lang::AccountDeserialize;
 use anchor_spl::token::TokenAccount;
+use solana_account::ReadableAccount;
+use solana_commitment_config::CommitmentLevel;
+use solana_keypair::Keypair;
+use solana_program::{instruction::Instruction, pubkey::Pubkey};
 use solana_program::{program_pack::Pack, rent::*, system_instruction};
 use solana_program_test::*;
-use solana_sdk::{
-    account::ReadableAccount,
-    instruction::Instruction,
-    pubkey::Pubkey,
-    signature::{Keypair, Signer},
-    transaction::Transaction,
-};
-use spl_token::*;
+use solana_signer::Signer;
+use solana_transaction::Transaction;
+use spl_associated_token_account_interface as spl_associated_token_account;
+use spl_token_interface as spl_token;
 
 pub struct SolanaCookie {
     pub context: RefCell<ProgramTestContext>,
@@ -65,10 +65,7 @@ impl SolanaCookie {
 
         let result = context
             .banks_client
-            .process_transaction_with_commitment(
-                transaction,
-                solana_sdk::commitment_config::CommitmentLevel::Processed,
-            )
+            .process_transaction_with_commitment(transaction, CommitmentLevel::Processed)
             .await;
 
         *self.last_transaction_log.borrow_mut() = self.logger_capture.read().unwrap().clone();
@@ -138,7 +135,7 @@ impl SolanaCookie {
     pub async fn create_account_from_len(&self, owner: &Pubkey, len: usize) -> Pubkey {
         let key = TestKeypair::new();
         let rent = self.rent.minimum_balance(len);
-        let create_account_instr = solana_sdk::system_instruction::create_account(
+        let create_account_instr = system_instruction::create_account(
             &self.context.borrow().payer.pubkey(),
             &key.pubkey(),
             rent,
@@ -155,7 +152,7 @@ impl SolanaCookie {
         let key = TestKeypair::new();
         let len = 8 + std::mem::size_of::<T>();
         let rent = self.rent.minimum_balance(len);
-        let create_account_instr = solana_sdk::system_instruction::create_account(
+        let create_account_instr = system_instruction::create_account(
             &self.context.borrow().payer.pubkey(),
             &key.pubkey(),
             rent,
@@ -208,7 +205,7 @@ impl SolanaCookie {
             .await
             .unwrap();
 
-        spl_associated_token_account::get_associated_token_address(owner, &mint)
+        spl_associated_token_account::address::get_associated_token_address(owner, &mint)
     }
 
     // Note: Only one table can be created per authority per slot!

@@ -2,10 +2,9 @@
 
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token::AssociatedToken, token::Token};
-use solana_program::instruction::Instruction;
+use solana_program::instruction::{self, Instruction};
 use solana_program_test::BanksClientError;
-use solana_sdk::instruction;
-use solana_sdk::transport::TransportError;
+use solana_transaction_error::TransportError;
 use std::sync::Arc;
 
 use super::solana::SolanaCookie;
@@ -356,14 +355,16 @@ impl ClientInstruction for CreateMarketInstruction {
         )
         .0;
 
-        let market_base_vault = spl_associated_token_account::get_associated_token_address(
-            &market_authority,
-            &self.base_mint,
-        );
-        let market_quote_vault = spl_associated_token_account::get_associated_token_address(
-            &market_authority,
-            &self.quote_mint,
-        );
+        let market_base_vault =
+            spl_associated_token_account_interface::address::get_associated_token_address(
+                &market_authority,
+                &self.base_mint,
+            );
+        let market_quote_vault =
+            spl_associated_token_account_interface::address::get_associated_token_address(
+                &market_authority,
+                &self.quote_mint,
+            );
 
         let accounts = Self::Accounts {
             market: self.market.pubkey(),

@@ -30,9 +30,6 @@ use error::*;
 use state::{OracleConfigParams, Order, OrderParams, PlaceOrderType, SelfTradeBehavior, Side};
 use std::cmp;
 
-#[cfg(all(not(feature = "no-entrypoint"), not(feature = "enable-gpl")))]
-compile_error!("compiling the program entrypoint without 'enable-gpl' makes no sense, enable it or use the 'cpi' or 'client' features");
-
 #[program]
 pub mod openbook_v2 {
     use super::*;
@@ -154,8 +151,8 @@ pub mod openbook_v2 {
     }
 
     /// Edit an order.
-    pub fn edit_order<'info>(
-        ctx: Context<'_, '_, '_, 'info, PlaceOrder<'info>>,
+    pub fn edit_order(
+        ctx: Context<PlaceOrder>,
         client_order_id: u64,
         expected_cancel_size: i64,
         place_order: PlaceOrderArgs,
@@ -205,8 +202,8 @@ pub mod openbook_v2 {
     }
 
     /// Edit an order pegged.
-    pub fn edit_order_pegged<'info>(
-        ctx: Context<'_, '_, '_, 'info, PlaceOrder<'info>>,
+    pub fn edit_order_pegged(
+        ctx: Context<PlaceOrder>,
         client_order_id: u64,
         expected_cancel_size: i64,
         place_order: PlaceOrderPeggedArgs,
@@ -481,7 +478,7 @@ pub mod openbook_v2 {
     }
 
     /// Withdraw any available tokens.
-    pub fn settle_funds<'info>(ctx: Context<'_, '_, '_, 'info, SettleFunds<'info>>) -> Result<()> {
+    pub fn settle_funds(ctx: Context<SettleFunds>) -> Result<()> {
         #[cfg(feature = "enable-gpl")]
         instructions::settle_funds(ctx)?;
         Ok(())
@@ -489,9 +486,7 @@ pub mod openbook_v2 {
 
     /// Withdraw any available tokens when the market is expired (only
     /// [`close_market_admin`](crate::state::Market::close_market_admin)).
-    pub fn settle_funds_expired<'info>(
-        ctx: Context<'_, '_, '_, 'info, SettleFundsExpired<'info>>,
-    ) -> Result<()> {
+    pub fn settle_funds_expired<'info>(ctx: Context<SettleFundsExpired>) -> Result<()> {
         #[cfg(feature = "enable-gpl")]
         instructions::settle_funds_expired(ctx)?;
         Ok(())

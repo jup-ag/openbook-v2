@@ -18,6 +18,7 @@ no-idl = []
 no-log-ix-name = []
 test-bpf = ["client"]
 client = ["solana-sdk", "no-entrypoint"]
+solana-sdk = ["dep:solana-account"]
 # Enables GPL-licensed parts of the code. See LICENSE file.
 enable-gpl = []
 
@@ -26,11 +27,12 @@ enable-gpl = []
 anchor-lang = { workspace = true, features = ["event-cpi"] }
 anchor-spl = { workspace = true }
 arbitrary = { version = "~1.0", features = ["derive"], optional = true }
-raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "7567c36c2d116445f4b4c1113ccd6dc86b4a9610", features = [
+raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "447050692d0454fef80663830df65d4e546a8bc2", features = [
     "no-entrypoint",
 ] }
 arrayref = "0.3.6"
 bytemuck = { version = "^1.7.2", features = ["derive", "min_const_generics"] }
+borsh = "1"
 default-env = "0.1.1"
 derivative = "2.2.0"
 fixed = { workspace = true, features = [
@@ -42,8 +44,8 @@ itertools = "0.10.3"
 num_enum = "0.5.1"
 pyth-sdk-solana = { workspace = true }
 solana-security-txt = "1.1.1"
+solana-account = { workspace = true, optional = true }
 solana-program = { workspace = true }
-solana-sdk = { workspace = true, optional = true }
 static_assertions = "1.1"
 switchboard-solana = "0.30.4"
 
@@ -56,9 +58,13 @@ itertools = "0.10.3"
 lazy_static = "1.4.0"
 num = "0.4.0"
 rand = "0.8.4"
+solana-account = { workspace = true }
+solana-commitment-config = { workspace = true }
+solana-keypair = { workspace = true }
 solana-program-test = { workspace = true }
 solana-logger = { workspace = true }
-spl-token = { version = "6", features = ["no-entrypoint"] }
-spl-associated-token-account = { workspace = true, features = [
-    "no-entrypoint",
-] }
+solana-signer = { workspace = true }
+solana-transaction = { workspace = true }
+solana-transaction-error = { workspace = true }
+spl-associated-token-account-interface = { workspace = true }
+spl-token-interface = { workspace = true }

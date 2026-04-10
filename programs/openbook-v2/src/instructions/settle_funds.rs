@@ -5,7 +5,7 @@ use crate::logs::SettleFundsLog;
 use crate::state::*;
 use crate::token_utils::*;
 
-pub fn settle_funds<'info>(ctx: Context<'_, '_, '_, 'info, SettleFunds<'info>>) -> Result<()> {
+pub fn settle_funds(ctx: Context<SettleFunds>) -> Result<()> {
     let mut open_orders_account = ctx.accounts.open_orders_account.load_mut()?;
     let mut market = ctx.accounts.market.load_mut()?;
 

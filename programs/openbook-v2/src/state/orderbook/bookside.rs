@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use borsh::{BorshDeserialize, BorshSerialize};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use static_assertions::const_assert_eq;
 
@@ -12,10 +13,11 @@ use super::*;
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum BookSideOrderTree {
     Fixed = 0,
     OraclePegged = 1,

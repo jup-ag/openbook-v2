@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use borsh::{BorshDeserialize, BorshSerialize};
 use bytemuck::{cast, cast_mut, cast_ref};
 
 use num_enum::{IntoPrimitive, TryFromPrimitive};
@@ -17,10 +18,11 @@ pub const MAX_ORDERTREE_NODES: usize = 1024;
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum OrderTreeType {
     Bids,
     Asks,

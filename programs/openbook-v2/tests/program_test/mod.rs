@@ -6,11 +6,13 @@ use std::{sync::Arc, sync::RwLock};
 use fixed::types::I80F48;
 use log::*;
 use openbook_v2::state::Market;
+use solana_account::Account as SolanaAccount;
+use solana_program::pubkey::Pubkey;
 use solana_program::{program_option::COption, program_pack::Pack};
 use solana_program_test::*;
-use solana_sdk::pubkey::Pubkey;
-pub use solana_sdk::transport::TransportError;
-use spl_token::{state::*, *};
+pub use solana_transaction_error::TransportError;
+use spl_token_interface as spl_token;
+use spl_token_interface::state::*;
 
 use crate::program_test::setup::{create_open_orders_account, create_open_orders_indexer, Token};
 
@@ -64,7 +66,7 @@ impl AddPacked for ProgramTest {
         data: &T,
         owner: &Pubkey,
     ) {
-        let mut account = solana_sdk::account::Account::new(amount, T::get_packed_len(), owner);
+        let mut account = SolanaAccount::new(amount, T::get_packed_len(), owner);
         data.pack_into_slice(&mut account.data);
         self.add_account(pubkey, account);
     }
@@ -201,11 +203,7 @@ impl TestContextBuilder {
             let user_key = TestKeypair::new();
             self.test.add_account(
                 user_key.pubkey(),
-                solana_sdk::account::Account::new(
-                    u32::MAX as u64,
-                    0,
-                    &solana_sdk::system_program::id(),
-                ),
+                SolanaAccount::new(u32::MAX as u64, 0, &solana_program::system_program::id()),
             );
 
             // give every user 10^18 (< 2^60) of every token

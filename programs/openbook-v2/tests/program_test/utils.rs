@@ -2,12 +2,12 @@
 
 use bytemuck::{bytes_of, Contiguous};
 use fixed::types::I80F48;
+use solana_keypair::Keypair;
 use solana_program::instruction::InstructionError;
 use solana_program::program_error::ProgramError;
-use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signature::Keypair;
-use solana_sdk::transaction::TransactionError;
-use solana_sdk::transport::TransportError;
+use solana_program::pubkey::Pubkey;
+use solana_signer::Signer;
+use solana_transaction_error::{TransactionError, TransportError};
 
 pub fn gen_signer_seeds<'a>(nonce: &'a u64, acc_pk: &'a Pubkey) -> [&'a [u8]; 2] {
     [acc_pk.as_ref(), bytes_of(nonce)]
@@ -57,11 +57,11 @@ impl TestKeypair {
     }
 
     pub fn to_keypair(&self) -> Keypair {
-        Keypair::from_bytes(&self.0).unwrap()
+        Keypair::try_from(&self.0[..]).unwrap()
     }
 
     pub fn pubkey(&self) -> Pubkey {
-        solana_sdk::signature::Signer::pubkey(&self.to_keypair())
+        Signer::pubkey(&self.to_keypair())
     }
 }
 impl Default for TestKeypair {

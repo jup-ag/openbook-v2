@@ -7,7 +7,7 @@ use std::{cell::Ref, mem};
 /// Functions should prefer to work with AccountReader where possible, to abstract over
 /// AccountInfo and AccountSharedData. That way the functions become usable in the program
 /// and in client code.
-// NOTE: would love to use solana's ReadableAccount, but that's in solana_sdk -- unavailable for programs
+// NOTE: off-chain helpers use solana-account behind the optional `solana-sdk` feature.
 pub trait AccountReader {
     fn owner(&self) -> &Pubkey;
     fn data(&self) -> &[u8];
@@ -107,7 +107,7 @@ impl<'info, 'a> KeyedAccountReader for AccountInfoRefMut<'info, 'a> {
 }
 
 #[cfg(feature = "solana-sdk")]
-impl<T: solana_sdk::account::ReadableAccount> AccountReader for T {
+impl<T: solana_account::ReadableAccount> AccountReader for T {
     fn owner(&self) -> &Pubkey {
         self.owner()
     }
@@ -121,7 +121,7 @@ impl<T: solana_sdk::account::ReadableAccount> AccountReader for T {
 #[derive(Clone)]
 pub struct KeyedAccount {
     pub key: Pubkey,
-    pub account: solana_sdk::account::Account,
+    pub account: solana_account::Account,
 }
 
 #[cfg(feature = "solana-sdk")]
@@ -146,12 +146,12 @@ impl KeyedAccountReader for KeyedAccount {
 #[derive(Clone)]
 pub struct KeyedAccountSharedData {
     pub key: Pubkey,
-    pub data: solana_sdk::account::AccountSharedData,
+    pub data: solana_account::AccountSharedData,
 }
 
 #[cfg(feature = "solana-sdk")]
 impl KeyedAccountSharedData {
-    pub fn new(key: Pubkey, data: solana_sdk::account::AccountSharedData) -> Self {
+    pub fn new(key: Pubkey, data: solana_account::AccountSharedData) -> Self {
         Self { key, data }
     }
 }

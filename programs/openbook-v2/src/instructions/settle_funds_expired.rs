@@ -2,9 +2,7 @@ use crate::accounts_ix::*;
 use crate::error::OpenBookError;
 use anchor_lang::prelude::*;
 
-pub fn settle_funds_expired<'info>(
-    ctx: Context<'_, '_, '_, 'info, SettleFundsExpired<'info>>,
-) -> Result<()> {
+pub fn settle_funds_expired<'info>(ctx: Context<SettleFundsExpired>) -> Result<()> {
     {
         let market = ctx.accounts.market.load()?;
         require!(

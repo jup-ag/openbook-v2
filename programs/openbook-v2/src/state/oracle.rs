@@ -156,7 +156,7 @@ pub fn determine_oracle_type(acc_info: &impl KeyedAccountReader) -> Result<Oracl
         return Ok(OracleType::SwitchboardV2);
     }
     // note: this is the only known way of checking this
-    else if acc_info.owner() == &raydium_amm_v3::ID {
+    else if acc_info.owner().to_bytes() == raydium_amm_v3::ID.to_bytes() {
         return Ok(OracleType::RaydiumCLMM);
     }
 

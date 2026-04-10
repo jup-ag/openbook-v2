@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use borsh::{BorshDeserialize, BorshSerialize};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 
 use super::*;
@@ -12,11 +13,12 @@ use crate::error::*;
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum PlaceOrderType {
     /// Take existing orders up to price, max_base_quantity and max_quote_quantity.
     /// If any base_quantity or quote_quantity remains, place an order on the book
@@ -61,10 +63,11 @@ impl PlaceOrderType {
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum PostOrderType {
     /// Take existing orders up to price, max_base_quantity and max_quote_quantity.
     /// If any base_quantity or quote_quantity remains, place an order on the book
@@ -88,14 +91,15 @@ pub enum PostOrderType {
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 #[repr(u8)]
 /// Self trade behavior controls how taker orders interact with resting limit orders of the same account.
 /// This setting has no influence on placing a resting or oracle pegged limit order that does not match
 /// immediately, instead it's the responsibility of the user to correctly configure his taker orders.
+#[borsh(use_discriminant = true)]
 pub enum SelfTradeBehavior {
     /// Both the maker and taker sides of the matched orders are decremented.
     /// This is equivalent to a normal order match, except for the fact that no fees are applied.
@@ -117,11 +121,12 @@ pub enum SelfTradeBehavior {
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum Side {
     Bid = 0,
     Ask = 1,
@@ -169,10 +174,11 @@ impl Side {
     TryFromPrimitive,
     IntoPrimitive,
     Debug,
-    AnchorSerialize,
-    AnchorDeserialize,
+    BorshSerialize,
+    BorshDeserialize,
 )]
 #[repr(u8)]
+#[borsh(use_discriminant = true)]
 pub enum SideAndOrderTree {
     BidFixed = 0,
     AskFixed = 1,

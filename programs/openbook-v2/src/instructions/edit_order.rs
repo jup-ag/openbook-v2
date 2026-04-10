@@ -4,7 +4,7 @@ use crate::state::Order;
 use anchor_lang::prelude::*;
 
 pub fn edit_order<'info>(
-    ctx: Context<'_, '_, '_, 'info, PlaceOrder<'info>>,
+    ctx: Context<PlaceOrder>,
     cancel_client_order_id: u64,
     expected_cancel_size: i64,
     mut order: Order,
