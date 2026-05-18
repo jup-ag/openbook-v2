@@ -4573,14 +4573,13 @@ dependencies = [
 [[package]]
 name = "raydium-amm-v3"
 version = "0.1.0"
-source = "git+ssh://git@github.com/jup-ag/raydium-clmm.git?rev=447050692d0454fef80663830df65d4e546a8bc2#447050692d0454fef80663830df65d4e546a8bc2"
+source = "git+ssh://git@github.com/jup-ag/raydium-clmm.git?rev=be81db90af7ad9c1f6c11a6a23c41fb307bd3330#be81db90af7ad9c1f6c11a6a23c41fb307bd3330"
 dependencies = [
  "anchor-lang",
  "anchor-spl",
  "arrayref",
  "bytemuck",
  "solana-program 4.0.0",
- "solana-security-txt",
  "spl-memo-interface",
  "uint",
 ]
