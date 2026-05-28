@@ -27,7 +27,7 @@ enable-gpl = []
 anchor-lang = { workspace = true, features = ["event-cpi"] }
 anchor-spl = { workspace = true }
 arbitrary = { version = "~1.0", features = ["derive"], optional = true }
-raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "be81db90af7ad9c1f6c11a6a23c41fb307bd3330", features = [
+raydium-amm-v3 = { git = "ssh://git@github.com/jup-ag/raydium-clmm.git", rev = "225535ea74bb7aa3dd2c9fc99232f7a73af50e2c", features = [
     "no-entrypoint",
 ] }
 arrayref = "0.3.6"
