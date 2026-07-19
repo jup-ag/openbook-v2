@@ -7,8 +7,8 @@ resolver = "2"
 anchor-lang = "1.0.0"
 anchor-spl = "1.0.0"
 fixed = { git = "https://github.com/blockworks-foundation/fixed.git", branch = "v1.11.0-borsh0_10-mango" }
-pyth-sdk-solana = { git = "https://github.com/jup-ag/pyth-sdk-rs.git", rev = "3f7160bec935bf1698b20b1a3ecfa86b9eec6e1b" }
-solana-account = "3.4.0"
+pyth-sdk-solana = { git = "https://github.com/pyth-network/pyth-sdk-rs.git", rev = "3f7160bec935bf1698b20b1a3ecfa86b9eec6e1b" }
+solana-account = "4.3.1"
 solana-account-decoder = "3.1.12"
 solana-commitment-config = "3.1.1"
 solana-keypair = "3.1.2"
