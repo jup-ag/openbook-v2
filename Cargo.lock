@@ -3884,7 +3884,7 @@ dependencies = [
  "solana-commitment-config",
  "solana-keypair",
  "solana-logger",
- "solana-program 3.0.0",
+ "solana-program 4.0.0",
  "solana-program-test",
  "solana-security-txt",
  "solana-signer",
